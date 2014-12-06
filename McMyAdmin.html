@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>McMyAdmin - Minecraft 服务器网页后台</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=1100, initial-scale=1.2, maximum-scale=1.2, target-densitydpi=device-dpi, user-scalable=0" />
+        <meta name="apple-itunes-app" content="app-id=id469794253, affiliate-data=11lbeZ"/>
+        <link type="text/css" href="css/McMyAdmin_Slick.css" id="styleSheet" rel="stylesheet" />
+        <link type="text/css" href="css/Common.css" rel="stylesheet" />
+        <link type="text/css" href="css/Branding.css" rel="stylesheet" />
+        <script type="text/javascript" src="//www.mcmyadmin.com/Updates.js?r=1"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-fx.min.js"></script>
+        <script type="text/javascript" src="LanguagePacks/English.js"></script>
+        <script type="text/javascript" src="js/Config.js"></script>
+        <script type="text/javascript" src="js/FileSaver.js"></script>
+        <script type="text/javascript" src="js/McMyAdmin.js"></script>
+	</head>
+	<body>
+        <div id="RASoverlay">
+            <div id="RASbanner">
+                <button onclick="stopRASclient();">结束</button>
+                <span class="bold" style="line-height:24px;color:white">McMyAdmin 远程协助</span>
+            </div>
+            <img id="RAScursor" src="Images\RAScursor.png" alt="cursor"/>
+        </div>
+        <h1 id="bgtext">欢迎</h1>
+        <img src="Images/CCTransparent.png" alt="CubeCoders" id="CCbrand" />
+	    <div id="passwdchange" class="modalbg modalnormal">
+	        <div class="modalpanel">
+	            <div class="modalcontents">
+	                <h2 class="notopmargin">修改密码</h2>
+                    
+                    <div class="ilb">
+	                    <span>当前密码:</span><br/>
+                        <input type="password" id="oldpwd"/>
+                    </div>
+                    <br/>
+	                <div class="ilb">
+	                    <span>新密码:</span><br/>
+	                    <input type="password" id="newpwd" />
+	                </div>
+                    
+                    <div class="ilb">
+	                    <span>确认密码:</span><br/>
+                        <input type="password" id="newpwd2"/>
+                    </div>
+
+                    <div class="ilb">
+                        <span>密码强度:</span><br />
+                        <div id="pwgradecolor"></div>
+                    </div>
+	            </div>
+                
+                <div class="modalbuttons">
+	                <input type="button" value="确定" id="chancePasswordOKButton"/>
+	                <input type="button" value="取消" id="changePasswordCancelButton"/>
+	            </div>
+	        </div>
+	    </div>
+        
+        <div id="modalbg" class="modalbg modalnormal">
+	        <div class="modalpanel">
+	            <div id="modaliconholder">
+	                <div id="message_icon" class="message_warn"></div>
+	            </div>
+	            <div class="modalcontents">
+	                <h2 id="modaltitle">未知错误</h2>
+	                <p id="modalmessage">您是否开启了Javascript?</p>
+	            </div>
+	            <div class="modalbuttons">
+	                <input type="button" value="确定" id="modalok" style="display:none;"/>
+	                <input type="button" value="取消" id="modalcancel" style="display:none;"/>
+                    <input type="button" value="重试" id="modalretry" style="display:none;"/>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="centerbody">
+	        <div id="tasksarea">
+	            <h5 id="runtasktitle">正在运行的工作:</h5>
+	            <h5 id="noticestitle">通知:</h5>
+	        </div>
+
+        <div id="sidetabs">
+	            <a id="st_0" class="sidetab picked" href="#tab_status"><img src="Images/Status.png" alt="Status" /><span>状态</span></a>
+	            <a id="st_1" class="sidetab auth_4" href="#tab_console"><img src="Images/Console.png" alt="Console"/><span>控制台</span></a>
+	            <a id="st_2" class="sidetab auth_8" href="#tab_users"><img src="Images/Users.png" alt="Users" /><span>用户和用户组</span></a>
+	            <a id="st_3" class="sidetab" href="#tab_schedule"><img src="Images/Calendar.png" alt="Schedule" /><span>计划</span></a>
+	            <a id="st_4" class="sidetab" href="#tab_backups"><img src="Images/Backups.png" alt="Backups" /><span>备份</span></a>
+            <a id="st_4" class="sidetab auth_65536" href="#tab_filemanager"><img src="Images/FileManager.png" alt="File Manager" /><span>文件管理</span></a>
+            <a id="st_5" class="sidetab" href="#tab_config"><img src="Images/Settings.png" alt="Configuration" /><span>设置</span></a>
+            <a id="st_6" class="sidetab" href="#tab_about"><img src="Images/Help.png" alt="About" /><span>关于</span></a>
+        </div>
+
+	        <div id="tabs">
+	            <div class="tabarea" id="tab_status">
+	                <h3>服务器状态</h3>
+	                <img src="Images/Status.png" alt="Status" class="tabimg"/>
+	                <div class="tabcontents">
+                        
+	                    <div id="statusArea">
+	                        <table id="statusTable">
+	                            <tr>
+	                                <td>上次更新</td>
+	                                <td id="status_lastupdate">0000-00-00 00:00:00</td>
+	                            </tr>
+	                            <tr>
+	                                <td>服务器时间</td>
+	                                <td id="status_servertime">0000-00-00 00:00:00</td>
+	                            </tr>
+	                            <tr>
+	                                <td>在线人数</td>
+	                                <td id="status_onlineplayers">0 / 0</td>
+	                            </tr>
+	                        </table>
+
+	                        <div class="statusHolder">
+	                            <div id="status_icon" class="status_stop"></div>
+	                            <div class="statusText" id="status_statetext">服务器没有在运行.</div>
+	                            <p id="status_uptime">开启时间: 0 days, 0 hours, 0 minutes</p>
+	                        </div>
+	                    </div>
+
+                    <div class="gHolder">
+                        <div class="graphContainer" id="CPUHistoryGraph">
+
+                        </div>
+
+	                        <div class="graphInfo">
+	                            CPU 使用率: <span id="status_CPUusage">0%</span><br />
+	                            <div class="graphSingle" id="status_miniCPUgraph"></div>
+	                        </div>
+	                    </div>
+	                    <br />
+	                    <div class="gHolder">
+	                        <div class="graphContainer" id="MemoryHistoryGraph">
+                            
+	                        </div>
+
+	                        <div class="graphInfo">
+	                            内存使用率: <span id="status_RAMusage">0%</span><br />
+	                            <div class="graphSingle" id="status_miniRAMgraph"></div><br/>
+                                <span id="status_ramMB"></span><br/>
+	                        </div>
+	                    </div>
+	                    <input type="button" value="开启服务器" class="auth_2" id="button_startserver"/>
+	                    <input type="button" value="关闭服务器" class="auth_1" id="button_stopserver"/>
+                        <input type="button" value="睡眠服务器" class="auth_1" id="button_sleepserver"/>
+	                    <input type="button" value="强制关闭服务器" class="auth_1" id="button_killserver" onclick="performAction(APICommands.KillServer);"/>
+	                    <input type="button" value="重启服务器" class="auth_1 auth_2" id="button_restartserver"/>
+	                </div>
+	            </div>
+
+	            <div class="tabarea auth_4" id="tab_console">
+	                <h3>控制台</h3>
+	                <img src="Images/Console.png" alt="Console" class="tabimg"/>
+	                <div class="tabcontents">
+	                    <div id="chatArea">
+	                        <div id="chatNames">
+	                        </div>
+	                        <div id="chatHistory">
+	                        </div>
+	                        <div id="chatBox">
+	                            <input id="chatEntryBox" type="text" />
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+
+	            <div class="tabarea auth_8" id="tab_users">
+	                <h3>用户和用户组</h3>
+	                <img src="Images/Users.png" alt="Users" class="tabimg"/>
+	                <div class="tabcontents">
+                        <div class="featurewarning" id="feature_exporting">您当前没有设置用户组导出，仅有Mcmyadmin的指令会受到权限设置影响。 <a href="#" id="jumptofeatures">设置导出</a></div>
+                    <div class="featurewarning" id="feature_groups">你有 <span id="groupwarncount">0</span> 个用户组设置错误。 <a href="javascript:showGroupWarnings();" id="viewWarnings">查看错误</a> | <a href="javascript:getGroupWarnings();" id="retestWarnings">重新检查</a></div>
+                    <div class="h384 gsize">
+	                        <div class="vlistheader"><span class="vlistheadertext">用户组</span></div>
+                            <div class="vlistheader"><span class="vlistheadertext">世界</span></div>
+	                        <div class="vlistheader"><span class="vlistheadertext">用户</span></div>
+	                        <div class="vlistheader wide"><span class="vlistheadertext">权限</span></div>
+                    </div>
+                    <div class="p384 s384 f384 n384 nh384 gsize">
+                        <div class="vlistholder" id="worldgrouplist">
+
+                        </div>
+                        <div id="groupInfoArea" style="display:none;">
+                            <div class="vlistholder" id="groupworlds">
+
+                            </div>
+                            <div class="vlistholder subvlist" id="groupusers">
+
+                            </div>
+                            <div class="vlistholder subvlist wide" id="groupcommands">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b384 gsize">
+                        <div class="vlistheader">
+                            <input type="text" id="newGroupName" /><div class="tinyButton plus" id="newGroupButton"></div>
+                        </div>
+                        <div class="vlistheader">
+                            <select id="selectedAddWorld"></select>
+                            <div class="tinyButton plus" id="addWorldButton"></div>
+                        </div>
+                        <div class="vlistheader">
+                            <input type="text" id="newGroupUser" /><div class="tinyButton plus" id="newGroupUserButton"></div>
+                        </div>
+                        <div class="vlistheader wide">
+                            <input type="text" id="newGroupCommand" /><div class="tinyButton plus" id="newGroupCommandButton"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subarea notopmargin">
+	                    <h4 id="groupSettingsHeader">设定 {0}, {1}</h4>
+                    <table>
+                        <tr>
+	                            <td>默认用户组</td>
+                            <td class="groupsetting">
+                                <select id="groupdefault">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>权限继承来自</td>
+                            <td class="groupsetting">
+                                <select id="inheritlist">
+                                    <option>-</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+	                    <h4 class="notopmargin">群组/权限管理</h4>
+	                    <span class="note">* 并非支持所有的插件，请使用对应插件以便能工作。</span>
+	                    <table>
+	                        <tr>
+	                            <td>Chat Color</td>
+	                            <td class="groupsetting">
+	                                <select id="colorlist" class="groupInput">
+	                                    <option value=" " style="background-color:white;">(无)</option>
+	                                    <option value="4" style="background-color:#BE0000;color:White;">深红</option>
+	                                    <option value="c" style="background-color:#fe3f3f;">浅橙</option>
+	                                    <option value="e" style="background-color:#fefe3f;">黄</option>
+	                                    <option value="6" style="background-color:#FFAA00;">橙</option>
+	                                    <option value="2" style="background-color:#00be00;color:White;">深绿</option>
+	                                    <option value="a" style="background-color:#3ffe3f;">浅绿</option>
+	                                    <option value="b" style="background-color:#3ffefe;">亮蓝</option>
+	                                    <option value="3" style="background-color:#00bebe;">水蓝</option>
+	                                    <option value="1" style="background-color:#0000be;color:White;">深蓝</option>
+	                                    <option value="9" style="background-color:#3f3ffe;color:White;">浅紫</option>
+	                                    <option value="d" style="background-color:#fe3ffe;color:White;">浅红</option>
+	                                    <option value="5" style="background-color:#be00be;color:White;">紫</option>
+	                                    <option value="f" style="background-color:white;">白</option>
+	                                    <option value="7" style="background-color:#bebebe;">浅灰</option>
+	                                    <option value="8" style="background-color:#3f3f3f;color:White;">深灰</option>
+	                                    <option value="0" style="background-color:#000;color:White;">黑</option>
+	                                </select>
+	                            </td>
+	                            <td>
+	                                <div id="colorpreview">&nbsp;</div>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td>允许建造*<br /></td>
+	                            <td class="groupsetting">
+	                                <select id="groupbuild">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </td>
+	                            <td></td>
+	                        </tr>
+	                        <tr>
+	                            <td>允许使用按钮等*<br /></td>
+	                            <td class="groupsetting">
+	                                <select id="groupinteract">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </td>
+	                            <td></td>
+	                        </tr>
+	                        <tr>
+	                            <td>名字前缀</td>
+	                            <td class="groupsetting">
+	                                <input id="groupprefix"/>
+	                            </td>
+	                            <td></td>
+	                        </tr>
+	                        <tr>
+	                            <td>名字后缀</td>
+	                            <td class="groupsetting">
+	                                <input id="groupsuffix"/>
+	                            </td>
+	                            <td></td>
+	                        </tr>
+	                    </table>
+	                    <h4 class="notopmargin">删除该组</h4>
+                        <input type="button" value="删除该组" id="deleteGroupButton"/>
+                        <h4 class="notopmargin">重命名该组</h4>
+                        <label for="groupRenameValue" style="padding-left:0px; padding-right:8px;">新组名</label><input type="text" id="groupRenameValue" /><input type="button" value="重命名组" id="renameGroupButton"/>
+	                </div>
+                    <br/>
+	            </div>
+
+	            <div class="tabarea" id="tab_schedule">
+	                <h3>时间计划</h3>
+	                <img src="Images/Calendar.png" alt="Schedule" class="tabimg"/>
+	                <div class="tabcontents">
+	                    <div class="x384">
+	                        <table id="scheduleHolder">
+	                            <thead>
+	                                <tr>
+	                                    <td style="width:25%;" class="rightBorder">时间</td>
+	                                    <td style="width:65%;">事件</td>
+	                                    <td style="width:10%;"></td>
+	                                </tr>
+	                            </thead>
+	                            <tbody id="scheduleItems">
+	                                <tr>
+	                                    <td></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                    <p class="nobottommargin" id="offsetmins"></p>
+	                    <input class="notopmargin auth_4096" type="button" onclick="resetSchedule();" value="重设服务器计划"/>
+	                    <div class="subarea auth_4096">
+	                        <h4>增加新计划</h4>
+	                        <table id="newEventTable">
+	                            <thead>
+	                                <tr>
+	                                    <td>什么时候</td>
+	                                    <td>时间</td>
+	                                    <td>事件</td>
+	                                    <td id="ParamDescription"></td>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td>
+	                                        <select id="timeType" onchange="selectTimeType(this.options[this.selectedIndex].value);">
+	                                            <option value="0">每X分钟</option>
+	                                            <option value="1">每X小时</option>
+	                                            <option value="2">每小时的第X分钟</option>
+	                                            <option value="3">每天</option>
+                                                <option value="4">当某件事发生时</option>
+	                                        </select>
+	                                    </td>
+	                                    <td>
+	                                        <div id="selEvery">
+	                                            <select id="selMinute">
+	                                                <option value="-1">1</option>
+	                                                <option value="-2">2</option>
+	                                                <option value="-5">5</option>
+	                                                <option value="-10">10</option>
+	                                                <option value="-15">15</option>
+	                                                <option value="-20">20</option>
+	                                                <option value="-30">30</option>
+	                                            </select>
+	                                        </div>
+
+                                        <div id="selEveryHour">
+                                            <select id="selHour">
+                                                <option value="-1">1</option>
+                                                <option value="-2">2</option>
+                                                <option value="-3">3</option>
+                                                <option value="-4">4</option>
+                                                <option value="-6">6</option>
+                                                <option value="-8">8</option>
+                                                <option value="-12">12</option>
+                                            </select>
+                                        </div>
+
+                                            <div id="selEventTrigger">
+                                                <select id="selTrigger">
+                                                    <option value="1">McMyAdmin 开启</option>
+                                                    <option value="10">玩家加入游戏</option>
+                                                    <option value="20">玩家离开游戏</option>
+                                                    <option value="30">群组被更改</option>
+                                                    <option value="40">完成备份</option>
+                                                    <option value="42">备份失败</option>
+                                                    <option value="50">服务器开启</option>
+                                                    <option value="60">服务器关闭</option>
+                                                    <option value="70">服务器崩溃</option>
+                                                    <option value="80">用户登陆了McMyAdmin</option>
+                                                </select>
+                                            </div>
+
+                                        <div id="selPast">
+                                            <select id="selMinPast">
+                                                <option></option>
+                                            </select>
+                                        </div>
+
+                                        <div id="selTime">
+                                            <select class="short" id="selAtTime">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select id="selEvent" onchange="selectEventType(this.options[this.selectedIndex].value);">
+	                                            <option value="100">保存世界</option>
+	                                            <option value="200">重启服务器</option>
+	                                            <option value="250">如果服务器没有玩家重启服务器</option>
+	                                            <option value="270">关闭服务器</option>
+	                                            <option value="280">开启服务器</option>
+	                                            <option value="400">广播信息</option>
+	                                            <option value="300">广播通知</option>
+	                                            <option value="1500">关闭白名单</option>
+                                            <option value="1600">打开用户组白名单</option>
+                                            <option value="1000">备份选中的世界</option>
+                                            <option value="700">运行一个游戏指令</option>
+                                            <option value="900">运行一个可执行文件</option>
+                                            <option value="910">变更一个可执行文件</option>
+                                            <!--<option value="1700">Restart server and rotate log file</option>-->
+                                            <option value="1800">自动更新Mcmyadmin</option>
+                                            <option value="260">重启服务器若使用内存大于:</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="eventparam" value="" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+	                        <input type="button" id="addEventButton" onclick="addNewEvent();" value="添加计划"/>
+                    </div>
+                </div>
+            </div>
+
+	            <div class="tabarea" id="tab_backups">
+	                <h3>备份</h3>
+	                <img src="Images/Backups.png" alt="Backups" class="tabimg"/>
+	                <div class="tabcontents">
+	                    <div class="x384">
+	                        <table id="backupTable">
+	                            <thead>
+	                                <tr>
+                                        <td style="width:32px;">选择</td>
+	                                    <td style="width:128px;">时间</td>
+	                                    <td>名称</td>
+	                                    <td style="width:64px;">大小</td>
+	                                </tr>
+	                            </thead>
+	                            <tbody id="backuplistbody">
+	                                <tr>
+	                                    <td></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+
+                    <p id="backupInfo"></p>
+
+                        <div class="subarea auth_512">
+                            <div style="display:inline-block;height:164px;">
+                                <h4>恢复备份</h4>
+                                <input type="checkbox" id="restoreWorlds" /><label for="restoreWorlds">恢复世界</label><br />
+                                <input type="checkbox" id="restoreServer" /><label for="restoreServer">恢复minecraft.jar文件</label><br />
+                                <input type="checkbox" id="restorePlugins" /><label for="restorePlugins">恢复插件</label><br />
+                                <input type="checkbox" id="restoreConfig" /><label for="restoreConfig">恢复插件配置</label><br />
+                                <input type="checkbox" id="restorePermissions" /><label for="restorePermissions">恢复权限设置</label><br />
+                                <input type="button" id="restoreBackup" value="恢复备份" onclick="restoreBackup();"/> <input type="button" id="deleteBackup" value="删除备份" onclick="deleteBackup();" />
+                            </div>
+                            <div style="display:inline-block;height:164px;float:right;">
+                                <h4>备份文档</h4>
+                            </div>
+                        </div>
+
+	                    <p>重要提示：如果您没有在恢复备份前删除原世界，则备份恢复后旧世界会混杂在备份世界中！</p>
+
+	                    <div class="subarea auth_512">
+	                        <div id="backupButtons">
+	                            <h4>新建备份</h4>
+	                            <div class="nomargin">
+                                    <span>名称:</span> <input type="text" id="backuplabel"/> <br />
+                                    <input type="checkbox" id="backupserver" /> <label for="backupserver">包括minecraft.jar</label><br />
+                                    <input type="checkbox" id="backupplugins" /> <label for="backupplugins">包括插件</label><br />
+                                    <input type="checkbox" id="backupconfig" /> <label for="backupconfig">包括插件配置</label><br />
+                                    <input type="checkbox" id="backuppermissions" /> <label for="backuppermissions">包括权限设置</label><br />
+                                    <input type="button" onclick="TakeBackup();" value="创建备份"/><div class="nomargin"></div><br />
+	                                <span class="note">备份文件名称只能含有字母，数字，空格，下划线。</span>
+	                            </div>
+	                        </div>
+	                    </div>
+                       
+	                    <!--<div class="subarea auth_131072">
+	                        <h4>Upload Backup</h4>
+	                        <p class="notopmargin">The world must be in the .mcb format otherwise it may not unpack correctly. Maximum file size: 2GB</p>
+	                        <iframe src="UploadBackup.html" style="width:512px; height:26px; border: none; overflow:hidden;"></iframe>
+	                    </div>-->
+	                </div>
+	            </div>
+
+            <div class="tabarea" id="tab_filemanager">
+                <!--<div id="fileManagerMenu">
+                    <div id="fileManager_addFolder">Add Folder</div>
+                    <div id="fileManager_delFile">Delete File</div>
+                </div>-->
+                <h3>文件管理</h3>
+                <img src="Images/FileManager.png" alt="Configuration" class="tabimg" />
+                <div class="tabcontents">
+                    <table id="fileManagerTable">
+                        <thead>
+                            <tr>
+                                <th width="20px"> </th>
+                                <th width="50%">文件名</th>
+                                <th>文件大小</th>
+                                <th>上次修改日期</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fmContents"></tbody>
+                    </table>
+                    <p>当前目录: <span id="currentDir"></span></p>
+                    <p>拖拽文件到此处上传，点击文件下载。</p>
+                    <p>你可以上传这些格式的文件: .yml, .json, .xml, .txt, .conf, .config, .cfg, .dat, .mca, .png, .craft, .schematic</p>
+                </div>
+            </div>
+
+            <div class="tabarea" id="tab_config">
+	                <h3>设置</h3>
+                <img src="Images/Settings.png" alt="Configuration" class="tabimg" />
+                <div class="tabcontents">
+                    <div class="subtabhead">
+	                        <a id="st_1_1" href="#tab_config_gamesettings" class="subtab picked auth_16">Game Settings游戏设置</a>
+	                        <a id="st_1_2" href="#tab_config_serversettings" class="subtab auth_16">服务器设置</a>
+                            <a id="st_1_3" href="#tab_config_worlds" class="subtab auth_8">世界管理</a>
+                        <a id="st_1_4" href="#tab_config_features" class="subtab auth_16">功能设置</a>
+	                        <a id="st_1_5" href="#tab_config_plugins" class="subtab auth_128">插件</a>
+                        <a id="st_1_6" href="#tab_config_panelsettings" class="subtab">偏好设置</a>
+	                        <a id="st_1_7" href="#tab_config_loginusers" class="subtab auth_1048576">用户管理</a>
+                    </div>
+                    <div class="subtabcontainer auth_16" id="tab_config_gamesettings">
+	                        <p class="notopmargin">注意：这些设置会在重启Minecraft服务器后生效。</p>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">游戏模式</p>
+	                                <p class="description">默认的玩家游戏模式</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_gamemode">
+	                                    <option value="0">生存</option>
+	                                    <option value="1">创造</option>
+                                        <option value="2">冒险</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">难度</p>
+	                                <p class="description">设置游戏的难度</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_difficulty">
+	                                    <option value="0">和平</option>
+	                                    <option value="1">简单</option>
+	                                    <option value="2">中等</option>
+	                                    <option value="3">困难</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">死亡核心模式</p>
+	                                <p class="description">玩家死亡后会被服务器Ban</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_hardcore">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">开启怪物</p>
+	                                <p class="description">是否生成怪物（如僵尸，骷髅等）</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_monsters">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">生成动物</p>
+	                                <p class="description">是否生成动物（如马，羊，猪等）</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_animals">
+	                                    <option value="true">是</option>
+	                                    <option value="false"否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+                            
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">生成村民</p>
+	                                <p class="description">是否在村庄处生成村民</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_npc">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">允许PVP</p>
+	                                <p class="description">是否允许玩家间互相攻击</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_pvp">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">开启地狱（Nether）</p>
+	                                <p class="description">玩家是否可以从地狱门进入地狱</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_nether">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">允许飞行</p>
+	                                <p class="description">是否允许玩家在生存模式中飞行</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_flight">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">允许指令方块</p>
+	                                <p class="description">是否允许游戏中可以使用指令方块</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_commandblocks">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">玩家闲置超时分钟数</p>
+                                <p class="description">设定允许玩家AFK的最长时间，超时的玩家将会被强制下线(0为禁用此功能)</p>
+                            </div>
+                            <div class="setting">
+                                <input type="number" id="setting_timeout" />
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">材质包</p>
+                                <p class="description">ZIP格式的材质包地址，连接者将会自动下载并使用此材质包。</p>
+                            </div>
+                            <div class="setting">
+                                <input type="text" id="setting_resourcepack" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer auth_16" id="tab_config_serversettings">
+	                        <p class="notopmargin">这些设定影响着Minecraft服务器的运行</p>
+                            
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">地图种子</p>
+	                                <p class="description">为世界生成器提供的地图种子</p>
+	                            </div>
+	                            <div class="setting">
+	                                <input type="text" id="setting_seed"/>
+	                            </div>
+	                        </div>
+
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">地图生成器</p>
+	                                <p class="description">默认地图的生成器</p>
+	                            </div>
+	                            <div class="setting">
+	                                <input type="text" id="setting_generatorsettings"/>
+	                            </div>
+	                        </div>
+
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">服务器MOTD</p>
+	                                <p class="description">在服务器列表中玩家可以看到的信息</p>
+	                            </div>
+	                            <div class="setting">
+	                                <input type="text" id="setting_mcmotd"/>
+	                            </div>
+	                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">服务器类型</p>
+	                                <p class="description">选择服务器的类型:</p>
+                            </div>
+                            <div class="setting" id="servertypesetting">
+                                <select id="setting_servertype">
+	                                    <option value="Official">官服</option>
+                                    <option value="CraftBukkit">CraftBukkit</option>
+                                    <option value="Spigot">Spigot</option>
+                                    <option value="Cauldron">Cauldron</option>
+                                    <option value="MCPC">MCPC+ (不建议使用)</option>
+                                    <option value="Tekkit">Tekkit</option>
+                                    <option value="TekkitLite">Tekkit Lite</option>
+                                    <option value="Forge">ForgeMod</option>
+                                    <option value="FeedTheBeast">Feed The Beast</option>
+                                    <option value="BungeeCord">BungeeCord</option>
+                                    <option value="ProjectRainbow">Project Rainbow</option>
+                                </select>
+
+	                                <input type="button" class="auth_8192" value="安装" id="button_updatemc2" style="min-width:64px";/>
+                            </div>
+                            <div class="setting" id="servertypelocked" style="display:none;">
+                                <span>官服 (已死)</span>
+                            </div>
+                        </div>
+
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">服务器更新渠道</p>
+	                                <p class="description">使用测试版或正式版</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_bukkitbeta">
+	                                    <option value="false">正式版</option>
+	                                    <option value="true">测试/最新版</option>
+	                                </select>
+	                            </div>
+	                        </div>
+                            
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">最高玩家数量</p>
+	                                <p class="description">服务器玩家数量限制<br/>本选项受到McMyAdmin.conf最大数量限制</p>
+	                            </div>
+	                            <div class="setting">
+	                                <input type="text" id="setting_maxplayers" style="min-width:48px; width:48px;"/>&nbsp;最大数量: <span class="maxplayerslimit">8</span>
+                                    <br /><span style="font-style: italic;">可在McMyAdmin.conf文件中修改名为MaxPlayers参数</span>
+	                            </div>
+	                        </div>
+                            
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">生成建筑</p>
+	                                <p class="description">是否生成村庄或神庙</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_structures">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+	                                </select>
+	                            </div>
+	                        </div>
+                            
+                            <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">世界类型</p>
+	                                <p class="description">控制主世界的地图类型</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_worldtype">
+	                                    <option value="DEFAULT">普通</option>
+	                                    <option value="FLAT">超平坦</option>
+                                        <option value="LARGEBIOMES">巨型生物群系</option>
+                                    <option value="AMPLIFIED">放大化 (需要 1.7 及以上)</option>
+                                    <option value="CUSTOMIZED">自定义 (自定义 1.8 及以上)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">成就通知</p>
+                                <p class="description">是否在世界范围内通告玩家获得的成就</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_achivements">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">可视距离</p>
+                                <p class="description">控制玩家可以看到多少chunk之外的地图，减少该值有助于提高游戏中的延迟问题。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_distance">
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10 (Default)</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">允许匿名统计数据</p>
+	                                <p class="description">是否允许发送到Mojang服务器的匿名统计数据</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_snooper">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br />
+                        <h4 class="subtabsection">定时备份</h4>
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">包括权限设置</p>
+                                <p class="description">在定时备份中包括用户和用户组页面中的设定。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_schedperm">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">包括插件</p>
+                                <p class="description">在定时备份中包括所有jar格式的插件。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_schedplugs">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">包括插件配置</p>
+                                <p class="description">在定时备份中包括所有yml、txt等格式的插件配置文件。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_schedconf">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h4 class="subtabsection">故障修复</h4>
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">服务端故障时自动重启</p>
+                                <p class="description">启用之后，当出现'SEVERE'(严重)错误时，McMyAdmin将自动重启Minecraft服务端。如果你装有故障/错误的插件，可能需要禁用此设置。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_severerestart">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer auto_8" id="tab_config_worlds">
+                        <div class="h384 gsize">
+	                            <div class="vlistheader wide"><span class="vlistheadertext">世界</span></div>
+                                <div class="vlistheader wide"><span class="vlistheadertext">信息</span></div>
+                        </div>
+                        <div class="p384 s384 f384 n384 nh384 gsize">
+                            <div class="vlistholder wide" id="WorldList">
+
+                            </div>
+                            <div class="vlistholder wide">
+                                <div id="currentworldholder">
+                                        <h4>名称:</h4>
+                                    <p id="worldname" class="notopmargin"></p>
+                                        <h4>存储路径:</h4>
+                                    <p id="worldpath" class="notopmargin"></p>
+                                        <h4>属性:</h4>
+                                    <p class="notopmargin" id="backupcb"><input type="checkbox" id="worldbackup" /><label for="worldbackup"> Included in backups</label></p>
+                                    <p id="nestedWorld">当前选中的世界是一个子世界，每当它的父世界被备份时，它也会被备份。</p>
+                                </div>
+                            </div>
+                        </div>
+                            <button onclick="scanWorlds();">搜索世界</button>
+                    </div>
+                    <div class="subtabcontainer auth_128" id="tab_config_plugins">
+                        <div class="subtabhead">
+	                            <a id="st_2_1" href="#tab_plugins_manage" class="subtab picked">管理插件</a>
+                            <a id="st_2_2" href="#tab_plugins_install" class="subtab">安装插件</a>
+                        </div>
+                        <div class="subtabcontainer" id="tab_plugins_manage">
+                            <p class="notopmargin">在这里管理服务器的插件，请注意服务器重启后才能生效。插件不能在服务器运行时被关闭，鼠标移动到插件名称上观看更多信息。</p>
+                            <div class="s384 f384" id="PluginList">
+
+	                            </div>
+	                            <input type="button" value="刷新插件列表" id="refreshPlugins"/>
+                            </div>
+                            <div class="subtabcontainer" id="tab_plugins_install">
+                                <input id="BukgetSearchQuery" type="text" class="searchbox"/>
+                                <div class="h384 gsize">
+	                                <div class="vlistheader wide"><span class="vlistheadertext">类别</span></div>
+                                    <div class="vlistheader"><span class="vlistheadertext">插件</span></div>
+	                            </div>
+                                <div class="p384 s384 f384 n384 nh384 gsize">
+	                                <div class="vlistholder wide" id="BukgetCategories">
+                                        <div class='vlistitem'>载入类别中...</div>
+	                                </div>
+                                    <div class="vlistholder wide" id="BukgetPlugins"></div>
+                                    <div style="height:100%;">
+                                        <div id="currentpluginholder">
+                                            <h4>名称:</h4>
+                                            <p class="notopmargin"><span id="bukgetplugin_name"></span> - <a href="javascript:void();" id="bukgetplugin_link">插件地址</a></p>
+                                            <h4>作者:</h4>
+                                            <p class="notopmargin"><span id="bukgetplugin_auth"></span> - <a href="javascript:void();" onclick="moreByAuthor();">关于作者</a></p>
+                                            <h4>描述:</h4>
+                                            <p id="bukgetplugin_desc" class="notopmargin"></p>
+                                            <h4>发布日期:</h4>
+                                            <p id="bukkitplugin_date" class="notopmargin"></p>
+                                            <h4>插件版本:</h4>
+                                        <p id="bukkitplugin_ver" class="notopmargin"></p>
+                                            <h4>可兼容CraftBukkit版本:</h4>
+                                        <p id="bukkitplugin_bukver" class="notopmargin"></p>
+                                            <input type="button" class="notopmargin" value="安装插件" id="installPluginButton" style="margin-bottom:18px;"/>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer" id="tab_config_panelsettings">
+	                        <p class="notopmargin">注意：这些设置仅在本地以cookies形式保存。</p>
+	                        <h4>界面颜色</h4>
+                        <div class="s384">
+                            <div class="colorsample" style="background-color:#002D5B;"></div>
+                            <div class="colorsample" style="background-color:#004A7F;"></div>
+                            <div class="colorsample" style="background-color:#4B95C6;"></div>
+                            <div class="colorsample" style="background-color:#68889E;"></div>
+                            <div class="colorsample" style="background-color:#216D7F;"></div>
+                            <div class="colorsample" style="background-color:#3F647F;"></div>
+                            <div class="colorsample" style="background-color:#36709A;"></div>
+                            <div class="colorsample" style="background-color:#244A46;"></div>
+                            <div class="colorsample" style="background-color:#185100;"></div>
+                            <div class="colorsample" style="background-color:#007F0E;"></div>
+                            <div class="colorsample" style="background-color:#5B7F00;"></div>
+                            <div class="colorsample" style="background-color:#B79500;"></div>
+                            <div class="colorsample" style="background-color:#876C00;"></div>
+                            <div class="colorsample" style="background-color:#443900;"></div>
+                            <div class="colorsample" style="background-color:#A04000;"></div>
+                            <div class="colorsample" style="background-color:#3C1900;"></div>
+                            <div class="colorsample" style="background-color:#680000;"></div>
+                            <div class="colorsample" style="background-color:#7F0000;"></div>
+                            <div class="colorsample" style="background-color:#725BB7;"></div>
+                            <div class="colorsample" style="background-color:#57007F;"></div>
+                            <div class="colorsample" style="background-color:#21007F;"></div>
+                            <div class="colorsample" style="background-color:#A80094;"></div>
+                            <div class="colorsample" style="background-color:#404040;"></div>
+                            <div class="colorsample" style="background-color:#0F0F0F;"></div>
+	                            <div class="colorsample" id="customcolor" style="background-color:#ffffff"><br/>自定义颜色</div>
+	                        </div>
+                            <div class="settingrow">
+	                            <div class="setting noborder">
+	                                <p class="title">主题选择</p>
+	                                <p class="description">选择McMyAdmin界面主题</p>
+	                            </div>
+	                            <div class="setting noborder">
+	                                <select id="setting_local_theme">
+	                                    <option value="DEFAULT">默认</option>
+	                                    <option value="ALTERNATE">清爽</option>
+                                        <option value="METRO">仿Win8</option>
+                                        <option value="SLICK">浓郁</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">关闭界面动画</p>
+	                                <p class="description">关闭动画可以提高运行速度</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_local_notransitions">
+	                                    <option value="true">否</option>
+	                                    <option value="false">是</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">在控制台显示时间</p>
+	                                <p class="description">受是否显示指令/聊天所发出时间，小屏幕用户可以选择关闭。</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_local_showtimestamps">
+	                                    <option value="true">否</option>
+	                                    <option value="false" selected="selected">是</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">控制台只显示聊天记录</p>
+	                                <p class="description">选择控制台是否只显示聊天记录而不显示完全版信息</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_local_chatonly">
+	                                    <option value="true">否</option>
+	                                    <option value="false">是</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer auth_16" id="tab_config_features">
+                        <p class="notopmargin">对你的Minecraft进行个性化定制。</p>
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">服务器名称</p>
+	                                <p class="description">在服务器列表中显示的服务器名称</p>
+	                            </div>
+	                            <div class="setting">
+	                                <input type="text" id="setting_servername"/>
+	                            </div>
+	                        </div>
+                            
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">欢迎辞</p>
+	                                <p class="description">当玩家加入游戏时向他发送的信息</p>
+	                            </div>
+	                            <div class="setting">
+	                                <textarea id="setting_motd" rows="4" cols="30"></textarea>
+	                            </div>
+	                        </div>
+
+	                        <div class="settingrow">
+	                            <div class="setting">
+	                                <p class="title">白名单</p>
+	                                <p class="description">选择使用哪一种白名单方式</p>
+	                            </div>
+	                            <div class="setting">
+	                                <select id="setting_whitelistMode">
+	                                    <option value="None">关闭白名单</option>
+	                                    <option value="Groups">所有群组中的玩家</option>
+	                                    <option value="Lockdown">任何玩家不可进入</option>
+                                        <option value="SingleGroup">单独群组</option>
+	                                </select>
+	                            </div>
+	                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+                                <p class="title">用户组白名单</p>
+	                                <p class="description">用于选择哪个群组获得白名单权限。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_whitelistGroup"></select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow" id="serversleepsetting">
+                            <div class="setting">
+	                                <p class="title">开启服务器休眠</p>
+	                                <p class="description">当服务器空闲时进入休眠模式以降低能源消耗，如有玩家试图连接服务器，服务器会自动启动。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_sleep">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">服务器唤醒</p>
+	                                <p class="description">向试图连接服务器的玩家告知服务器正在启动的信息:</p>
+                            </div>
+                            <div class="setting">
+                                <input type="text" id="setting_sleepmsg" />
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">开启服务器状态图片与部件</p>
+	                                <p class="description">是否生成一个服务器图片以显示玩家在线人数，每5分钟更新一次。<a href="status.png" title="Status Image">查看图片</a> | <a href="javascript:void();" id="getWidgetCode">HTML代码</a></p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_statusimage">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">在服务器列表中展示</p>
+	                                <p class="description">是否允许此服务器被展示在公共服务器列表中。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_serverpublic">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow" id="exportconfigrow">
+                            <div class="setting">
+	                                <p class="title">权限导出模式</p>
+	                                <p class="description">启用之后，McMyAdmin会自动导出指定插件的权限设置。</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_exporting">
+	                                    <option value="BukkitmChat">PermissionsBukkit + mChat (不支持多世界)</option>
+	                                    <option value="Bukkit">PermissionsBukkit (不支持多世界)</option>
+	                                    <option value="GroupManager">Group Manager (支持多世界)</option>
+                                        <option value="bPermissions">bPermissions (不支持多世界)</option>
+                                        <option value="PermissionsEX">PermissionsEX (支持多世界)</option>
+	                                    <option value="None">关闭</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">备份超出限制</p>
+	                                <p class="description">当备份因超过数量/大小限制时</p>
+                            </div>
+                            <div class="setting">
+                                <select id="settng_backupoverflow">
+	                                    <option value="NoDelete">取消备份</option>
+	                                    <option value="DeleteOldest">删除此时最早的备份(默认)</option>
+	                                    <option value="KeepDeleting">删除此时最早的备份直到可以备份</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">mChat 信息格式</p>
+	                                <p class="description">如果试用了mChat，在这里设置信息格式</p>
+                            </div>
+                            <div class="setting">
+                                <input id="setting_mchatformat" type="text" />
+                            </div>
+                        </div>
+                        <br />
+	                        <h4 class="subtabsection">玩家通知</h4>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">白名单信息</p>
+	                                <p class="description">当玩家不在白名单是，踢出玩家时显示的信息。（仅支持bukkit）</p>
+                            </div>
+                            <div class="setting">
+                                <input id="setting_whitelistmessage" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">欢迎信息</p>
+	                                <p class="description">是否在玩家进入服务器时显示欢迎玩家的信息</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_showwelcome">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">显示McMyAdmin登陆错误信息</p>
+                                <p class="description">当没有McMyAdmin账户的用户试图执行一条McMyAdmin指令时，是否向他显示错误信息</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_showaccessdenied">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">自动保存信息</p>
+	                                <p class="description">是否告知玩家服务器在自动保存中</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_warnsave">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settingrow">
+                            <div class="setting">
+	                                <p class="title">广播玩家组更改</p>
+	                                <p class="description">是否在某玩家的群组被更改时全服广播</p>
+                            </div>
+                            <div class="setting">
+                                <select id="setting_announcechange">
+	                                    <option value="true">是</option>
+	                                    <option value="false">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer auth_1048576" id="tab_config_loginusers">
+                            <p class="notopmargin">管理哪些用户可以登陆后台</p>
+
+                        <div class="h384 gsize">
+	                            <div class="vlistheader"><span class="vlistheadertext">用户</span></div>
+                                <div class="vlistheader wide_2"><span class="vlistheadertext">用户设置</span></div>
+                                <div class="vlistheader wide"><span class="vlistheadertext">权限</span></div>
+                        </div>
+                        <div class="p384 s384 f384 n384 nh384 gsize">
+                            <div class="vlistholder" id="MCMAUserList">
+                                <div class="vlistitem selected">SYSTEM</div>
+                            </div>
+                            <div class="" id="userTasksArea">
+                                <ul>
+                                        <li><input type="checkbox" value="1" id="uf_1" class="userSetting" /><label for="uf_1">用户禁用</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="2" id="uf_2" class="userSetting" /><label for="uf_2">用户在下次登陆时必须修改密码</label></li>
+                                        <li><input type="checkbox" value="4" id="uf_4" class="userSetting" /><label for="uf_4">用户不能修改密码</label></li>
+                                        <li><input type="checkbox" value="8" id="uf_8" class="userSetting" /><label for="uf_8">禁止用户外网登陆</label></li>
+                                    </ul>
+                                    <div class="p8">
+                                        <h4>修改密码</h4>
+                                        <span>新密码</span>
+                                        <input type="password" id="newuserpass" /><br />
+                                        <span>确认密码</span>
+                                        <input type="password" id="newuserpass_confirm" /><br />
+                                        <input type="button" value="修改密码" id="changeUserPassword"/>
+                                        <h4>删除用户</h4>
+                                        <input type="button" value="删除用户" id="deleteUserButton"/>
+                                    </div>
+
+                            </div>
+                            <div class="" id="userSettingArea">
+                                <ul>
+                                        <li><input type="checkbox" value="1" id="up_1" class="userFlag" /><label for="up_1">关闭服务器</label></li>
+                                        <li><input type="checkbox" value="2" id="up_2" class="userFlag" /><label for="up_2">开启服务器</label></li>
+                                        <li><input type="checkbox" value="4" id="up_4" class="userFlag" /><label for="up_4">使用控制台</label></li>
+                                        <li><input type="checkbox" value="8" id="up_8" class="userFlag" /><label for="up_8">修改用户/用户组/权限</label></li>
+                                        <li><input type="checkbox" value="16" id="up_16" class="userFlag" /><label for="up_16">修改服务器设置</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="32" id="up_32" class="userFlag" /><label for="up_32">修改服务器配置</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="64" id="up_64" class="userFlag" /><label for="up_64">修改McMyAdmin设置</label></li>
+                                        <li><input type="checkbox" value="128" id="up_128" class="userFlag" /><label for="up_128">管理插件</label></li>
+                                        <li><input type="checkbox" value="256" id="up_256" class="userFlag" /><label for="up_256">删除世界</label></li>
+                                        <li><input type="checkbox" value="512" id="up_512" class="userFlag" /><label for="up_512">备份世界</label></li>
+                                        <li><input type="checkbox" value="1024" id="up_1024" class="userFlag" /><label for="up_1024">恢复备份</label></li>
+                                        <li><input type="checkbox" value="2048" id="up_2048" class="userFlag" /><label for="up_2048">删除世界</label></li>
+                                        <li><input type="checkbox" value="4096" id="up_4096" class="userFlag" /><label for="up_4096">修改计划</label></li>
+                                        <li><input type="checkbox" value="8192" id="up_8192" class="userFlag" /><label for="up_8192">升级Minecraft服务器</label></li>
+                                        <li><input type="checkbox" value="16384" id="up_16384" class="userFlag" /><label for="up_16384">升级McMyAdmin服务器</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="32768" id="up_32768" class="userFlag" /><label for="up_32768">进行故障排除</label></li>
+                                    <li><input type="checkbox" value="65536" id="up_65536" class="userFlag" /><label for="up_65536">使用文件管理器</label></li>
+                                    <li><input type="checkbox" value="131072" id="up_131072" class="userFlag" /><label for="up_131072">上传文件</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="262144" id="up_262144" class="userFlag" /><label for="up_262144">修改文件</label></li>
+                                        <li class="notimplemented"><input type="checkbox" value="524288" id="up_524288" class="userFlag" /><label for="up_524288">上传可执行文件/插件</label></li>
+                                        <li><input type="checkbox" value="1048576" id="up_1048576" class="userFlag" /><label for="up_1048576">修改McMyAdmin用户</label></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="b384 gsize">
+                            <div class="vlistheader">
+                                <input type="text" id="newUserName" /><div class="tinyButton plus" id="addUserButton"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+	            <div class="tabarea" id="tab_about">
+	                <h3>关于</h3>
+	                <img src="Images/Help.png" alt="About" class="tabimg"/>
+	                <div class="tabcontents">
+	                    <div class="subtabhead">
+	                        <a id="st_3_1" href="#tab_about_info" class="subtab picked">信息</a>
+	                        <a href="#tab_about_updates" id="tabhead_about_updates" class="subtab">更新</a>
+                            <a id="st_3_5" href="#tab_about_ras" class="subtab">远程协助</a>
+	                        <!--<a href="#tab_about_diagnostics" class="subtab notimplemented auth_32768">Diagnostics</a>-->
+	                        <!--<a href="#tab_about_help" class="subtab">Help</a>-->
+	                    </div>
+	                    <div class="subtabcontainer" id="tab_about_info">
+                            <div class="subarea notopmargin">
+                                <h4>关于 McMyAdmin 2</h4>
+	                            <p class="notopmargin">McMyAdmin <span class="reg_versioninfo"></span> 版本</p>
+	                            <p>授权注册人: <span class="reg_owner">（拥有者）</span></p>
+	                            <p>CubeCoders制作的McMyAdmin自带方便使用的网页控制台，使您更方便的管理您的Minecraft服务器。</p>
+	                            <p>它可以让您对服务器有着完全的控制权并且在故障时更方便的诊断错误。</p>
+	                            <p>McMyAdmin ©2010-2013，制作团队 CubeCoders 有限公司 - 保留一切权利。更多信息请参见LICENCE.txt。</p>
+                            </div>
+
+                        <div class="subarea">
+                                <h4>已安装扩展</h4>
+                            <ul id="extlist"></ul>
+                        </div>
+                    </div>
+                    <div class="subtabcontainer" id="tab_about_updates">
+                        <div class="subarea notopmargin">
+                            <h4>McMyAdmin</h4>
+                            <table class="versionTable">
+                                <tr>
+	                                    <td>最新版版</td>
+                                    <td class="reg_latestversion"></td>
+                                </tr>
+                                <tr>
+	                                    <td>当前版本</td>
+                                    <td class="reg_versioninfo"></td>
+                                </tr>
+                            </table>
+
+                            <div id="licencearea" class="auth_2097151">
+	                                <h4>输入注册码</h4>
+	                                <span>输入McMyAdmin注册信息可以解除10人玩家限制并开启多用户支持。</span><br/>
+	                                <input type="text" style="width:400px" id="newKey"/><input type="button" value="验证注册码" onclick="addLicence();"/>
+                                <p class="tiny">没有注册码？可以在这里购买： <a href="https://mcmyadmin.com/#/getpro">McMyAdmin.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="subarea">
+                            <h4>Minecraft Server</h4>
+	                            <table class="versionTable">
+	                                <tr>
+	                                    <td>最新官服版本</td>
+	                                    <td class="ver_latestoffical"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td>最新CraftBukkit版本</td>
+	                                    <td class="ver_latestbukkit"></td>
+	                                </tr>
+	                                <tr>
+	                                    <td>当前版本</td>
+	                                    <td class="ver_minecraft">1.1</td>
+	                                </tr>
+	                            </table>
+	                        </div>
+                            
+	                        <div class="subarea">
+	                            <h4>服务器更新</h4>
+	                            <p>可以在设置中设置安装官服或者CraftBukkit。<br/>安装过程中将会关闭服务器。</p>
+	                            <input type="button" value="升级服务器" class="auth_8192" id="button_updatemc"/>
+	                            <input type="button" value="升级McMyAdmin" class="auth_16384" id="button_updatemcma"/>
+	                        </div>
+                            
+                            <input type="button" value="开启翻译模式" onclick="EnableTranslateMode();" class="notimplemented"/>
+	                    </div>
+                        <div class="subtabcontainer auth_32768" id="tab_about_ras">
+                            <div class="subarea notopmargin">
+	                            <h4>关于远程协助</h4>
+                                <p class="nomargin">远程协助可以使一名用户帮助另一名用户如何使用McMyAdmin</p>
+                                <p>远程协助发起者可以操作界面，加入者可以看到发起者的操作以及指针的移动。</p>
+                                <p>加入者在远程协助期间不可以操作McMyAdmin直到结束。</p>
+                                <p>请注意现在远程协助只能由admin用户发起。</p>
+                            </div>
+                            <div class="subarea">
+	                            <h4>开始远程协助</h4>
+                                <button onclick="startRASserver();">发起远程协助</button>&nbsp;<button onclick="startRASclient();">加入远程协助</button>
+                            </div>
+                        </div>
+	                    <div class="subtabcontainer notimplemented auth_32768" id="tab_about_diagnostics">
+	                        <p class="notopmargin nomargin">McMyAdmin自动诊断可以帮助您找到服务器配置错误的原因，请注意有些配置需要您的服务器供应商解决。</p>
+	                        <input type="button" value="开始诊断" onclick="featureUnavailable();"/>
+	                        <p>服务器报告:</p>
+	                        <table id="diagsummary">
+	                            <tr>
+	                                <td>很紧急</td>
+	                                <td>这些问题会导致服务器崩溃</td>
+	                            </tr>
+	                            <tr>
+	                                <td>紧急</td>
+	                                <td>这些问题可以导致服务器或McMyAdmin运行极其不稳定。</td>
+	                            </tr>
+	                            <tr>
+	                                <td>重要</td>
+	                                <td>这些问题虽然不会导致服务器崩溃，但是会影响到服务器的稳定性。</td>
+	                            </tr>
+	                            <tr>
+	                                <td>次要</td>
+	                                <td>错误的设定导致的次要错误。</td>
+	                            </tr>
+	                            <tr>
+	                                <td>中等</td>
+	                                <td>这些错误暂时不会导致过大的影响，但是还是小心为妙。</td>
+	                            </tr>
+	                            <tr>
+	                                <td>不重要</td>
+	                                <td>这些虽然不算是错误，但是还可以提供一些信息。</td>
+	                            </tr>
+	                            <tr>
+	                                <td>信息</td>
+	                                <td>最不重要的信息，通常和错误无关。</td>
+	                            </tr>
+	                        </table>
+	                    </div>
+	                    <!--<div class="subtabcontainer" id="tab_about_help">
+
+                    </div>-->
+                </div>
+            </div>
+        </div>
+
+        <div id="welcomescreen">
+            <div class="welcomemessage semibg">
+                <img src="Images/Logo256.png" alt="McMyAdmin Logo" id="mainlogo" />
+	                <p id="mainlogotext">欢迎使用McMyAdmin<br/><span id="provby">&nbsp;</span></p>
+            </div>
+
+            <div>
+                <div id="loginwait">
+                    <br />
+                    <div>
+	                        <span class="translatable" id="LoginMessage">登录信息</span><br /><br /><br />
+                    </div>
+                    <img src="Images/loadspin.gif" alt="Loading..." class="loadspin" />
+                </div>
+            </div>
+
+            <div>
+                <div id="loginscreen">
+	                    <p class="bold">登录到 <span class="pagehost">本机</span><br /></p>
+                    <div class="wfull">
+                        <form action="about:blank" method="get" onsubmit="doLogin(); return(false);" autocomplete="off">
+                            <table>
+                                <tr>
+	                                    <td class="loginfieldtitle">用户名</td>
+                                    <td><input type="text" id="loginusername" spellcheck="false" required="required" /></td>
+                                </tr>
+                                <tr>
+	                                    <td class="loginfieldtitle">密码</td>
+                                    <td><input type="password" id="loginpassword" spellcheck="false" required="required" /></td>
+                                </tr>
+                            </table>
+                            <div>
+	                                <span class="rememberContainer"><label for="rememberLogin">自动登录 </label><input type="checkbox" id="rememberLogin"/></span>
+                                <input type="submit" value="Login" id="dologin" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    <p><a href="javascript:lostPW();">我不知道登录名</a></p>
+                <p class="bold" id="loginerror">LOGINERROR</p>
+                <div class="appBadges">
+                    <a href="https://play.google.com/store/apps/details?id=com.cubecoders.mcma">
+                        <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dockbar db_top">
+            <span class="db_left">
+                <span id="userinfo">
+                        <span id="loggedinas">登录到</span> | <a href="javascript:void();" onclick="doLogout();">登出</a><span id="changePasswordArea"> | <a href="javascript:void();" onclick="showChangePassword();">修改密码</a></span>
+                </span>
+            </span>
+            <span class="db_right">
+
+            </span>
+        </div>
+        <div class="dockbar db_bottom">
+            <span class="db_left">
+
+            </span>
+            <span class="db_right reg_versioninfo">
+
+            </span>
+        </div>
+    </div>
+</body>
+</html>
