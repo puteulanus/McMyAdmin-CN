@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>McMyAdmin - Minecraft 服务器网页后台</title>
+		<title>McMyAdmin - Minecraft 服务器后台</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=1100, initial-scale=1.2, maximum-scale=1.2, target-densitydpi=device-dpi, user-scalable=0" />
@@ -67,7 +67,7 @@
 	            </div>
 	            <div class="modalcontents">
 	                <h2 id="modaltitle">未知错误</h2>
-	                <p id="modalmessage">您是否开启了Javascript?</p>
+	                <p id="modalmessage">您是否开启了JavaScript?</p>
 	            </div>
 	            <div class="modalbuttons">
 	                <input type="button" value="确定" id="modalok" style="display:none;"/>
@@ -118,7 +118,7 @@
 
 	                        <div class="statusHolder">
 	                            <div id="status_icon" class="status_stop"></div>
-	                            <div class="statusText" id="status_statetext">服务器没有在运行.</div>
+	                            <div class="statusText" id="status_statetext">服务器没有运行。</div>
 	                            <p id="status_uptime">开启时间: 0 days, 0 hours, 0 minutes</p>
 	                        </div>
 	                    </div>
@@ -173,7 +173,7 @@
 	                <h3>用户和用户组</h3>
 	                <img src="Images/Users.png" alt="Users" class="tabimg"/>
 	                <div class="tabcontents">
-                        <div class="featurewarning" id="feature_exporting">您当前没有设置用户组导出，仅有Mcmyadmin的指令会受到权限设置影响。 <a href="#" id="jumptofeatures">设置导出</a></div>
+                        <div class="featurewarning" id="feature_exporting">您当前没有设置用户组导出，仅有McMyAdmin的指令会受到权限设置影响。 <a href="#" id="jumptofeatures">设置导出</a></div>
                     <div class="featurewarning" id="feature_groups">你有 <span id="groupwarncount">0</span> 个用户组设置错误。 <a href="javascript:showGroupWarnings();" id="viewWarnings">查看错误</a> | <a href="javascript:getGroupWarnings();" id="retestWarnings">重新检查</a></div>
                     <div class="h384 gsize">
 	                        <div class="vlistheader"><span class="vlistheadertext">用户组</span></div>
@@ -408,7 +408,7 @@
                                         <select id="selEvent" onchange="selectEventType(this.options[this.selectedIndex].value);">
 	                                            <option value="100">保存世界</option>
 	                                            <option value="200">重启服务器</option>
-	                                            <option value="250">如果服务器没有玩家重启服务器</option>
+	                                            <option value="250">当服务器没有玩家时重启服务器</option>
 	                                            <option value="270">关闭服务器</option>
 	                                            <option value="280">开启服务器</option>
 	                                            <option value="400">广播信息</option>
@@ -420,7 +420,7 @@
                                             <option value="900">运行一个可执行文件</option>
                                             <option value="910">变更一个可执行文件</option>
                                             <!--<option value="1700">Restart server and rotate log file</option>-->
-                                            <option value="1800">自动更新Mcmyadmin</option>
+                                            <option value="1800">自动更新McMyAdmin</option>
                                             <option value="260">重启服务器若使用内存大于:</option>
                                         </select>
                                     </td>
@@ -463,7 +463,7 @@
                             <div style="display:inline-block;height:164px;">
                                 <h4>恢复备份</h4>
                                 <input type="checkbox" id="restoreWorlds" /><label for="restoreWorlds">恢复世界</label><br />
-                                <input type="checkbox" id="restoreServer" /><label for="restoreServer">恢复minecraft.jar文件</label><br />
+                                <input type="checkbox" id="restoreServer" /><label for="restoreServer">恢复MineCraft.jar文件</label><br />
                                 <input type="checkbox" id="restorePlugins" /><label for="restorePlugins">恢复插件</label><br />
                                 <input type="checkbox" id="restoreConfig" /><label for="restoreConfig">恢复插件配置</label><br />
                                 <input type="checkbox" id="restorePermissions" /><label for="restorePermissions">恢复权限设置</label><br />
@@ -481,7 +481,7 @@
 	                            <h4>新建备份</h4>
 	                            <div class="nomargin">
                                     <span>名称:</span> <input type="text" id="backuplabel"/> <br />
-                                    <input type="checkbox" id="backupserver" /> <label for="backupserver">包括minecraft.jar</label><br />
+                                    <input type="checkbox" id="backupserver" /> <label for="backupserver">包括MineCraft.jar</label><br />
                                     <input type="checkbox" id="backupplugins" /> <label for="backupplugins">包括插件</label><br />
                                     <input type="checkbox" id="backupconfig" /> <label for="backupconfig">包括插件配置</label><br />
                                     <input type="checkbox" id="backuppermissions" /> <label for="backuppermissions">包括权限设置</label><br />
@@ -538,7 +538,7 @@
 	                        <a id="st_1_7" href="#tab_config_loginusers" class="subtab auth_1048576">用户管理</a>
                     </div>
                     <div class="subtabcontainer auth_16" id="tab_config_gamesettings">
-	                        <p class="notopmargin">注意：这些设置会在重启Minecraft服务器后生效。</p>
+	                        <p class="notopmargin">注意：这些设置会在重启MineCraft服务器后生效。</p>
 
                         <div class="settingrow">
                             <div class="setting">
@@ -598,7 +598,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">生成动物</p>
-	                                <p class="description">是否生成动物（如马，羊，猪等）</p>
+	                                <p class="description">是否生成动物。（如马，羊，猪等）</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_animals">
@@ -611,7 +611,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">生成村民</p>
-	                                <p class="description">是否在村庄处生成村民</p>
+	                                <p class="description">是否在村庄处生成村民。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_npc">
@@ -624,7 +624,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">允许PVP</p>
-	                                <p class="description">是否允许玩家间互相攻击</p>
+	                                <p class="description">是否允许玩家间互相攻击。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_pvp">
@@ -637,7 +637,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">开启地狱（Nether）</p>
-	                                <p class="description">玩家是否可以从地狱门进入地狱</p>
+	                                <p class="description">玩家是否可以从地狱门进入地狱。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_nether">
@@ -650,7 +650,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">允许飞行</p>
-	                                <p class="description">是否允许玩家在生存模式中飞行</p>
+	                                <p class="description">是否允许玩家在生存模式中飞行。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_flight">
@@ -663,7 +663,7 @@
                             <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">允许指令方块</p>
-	                                <p class="description">是否允许游戏中可以使用指令方块</p>
+	                                <p class="description">是否允许游戏中可以使用指令方块。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_commandblocks">
@@ -676,7 +676,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">玩家闲置超时分钟数</p>
-                                <p class="description">设定允许玩家AFK的最长时间，超时的玩家将会被强制下线(0为禁用此功能)</p>
+                                <p class="description">设定允许玩家AFK的最长时间，超时的玩家将会被强制下线。(0为禁用此功能)</p>
                             </div>
                             <div class="setting">
                                 <input type="number" id="setting_timeout" />
@@ -694,7 +694,7 @@
                         </div>
                     </div>
                     <div class="subtabcontainer auth_16" id="tab_config_serversettings">
-	                        <p class="notopmargin">这些设定影响着Minecraft服务器的运行</p>
+	                        <p class="notopmargin">这些设定影响着MineCraft服务器的运行</p>
                             
 	                        <div class="settingrow">
 	                            <div class="setting">
@@ -709,7 +709,7 @@
                             <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">地图生成器</p>
-	                                <p class="description">默认地图的生成器</p>
+	                                <p class="description">默认地图的生成器。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <input type="text" id="setting_generatorsettings"/>
@@ -719,7 +719,7 @@
                             <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">服务器MOTD</p>
-	                                <p class="description">在服务器列表中玩家可以看到的信息</p>
+	                                <p class="description">在服务器列表中玩家可以看到的信息。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <input type="text" id="setting_mcmotd"/>
@@ -769,18 +769,18 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">最高玩家数量</p>
-	                                <p class="description">服务器玩家数量限制<br/>本选项受到McMyAdmin.conf最大数量限制</p>
+	                                <p class="description">服务器玩家数量限制<br/>本选项受到McMyAdmin.conf最大数量限制。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <input type="text" id="setting_maxplayers" style="min-width:48px; width:48px;"/>&nbsp;最大数量: <span class="maxplayerslimit">8</span>
-                                    <br /><span style="font-style: italic;">可在McMyAdmin.conf文件中修改名为MaxPlayers参数</span>
+                                    <br /><span style="font-style: italic;">可在McMyAdmin.conf文件中修改名为MaxPlayers参数。</span>
 	                            </div>
 	                        </div>
                             
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">生成建筑</p>
-	                                <p class="description">是否生成村庄或神庙</p>
+	                                <p class="description">是否生成村庄或神庙。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_structures">
@@ -793,7 +793,7 @@
                             <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">世界类型</p>
-	                                <p class="description">控制主世界的地图类型</p>
+	                                <p class="description">控制主世界的地图类型。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_worldtype">
@@ -809,7 +809,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">成就通知</p>
-                                <p class="description">是否在世界范围内通告玩家获得的成就</p>
+                                <p class="description">是否在世界范围内通告玩家获得的成就。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_achivements">
@@ -846,7 +846,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">允许匿名统计数据</p>
-	                                <p class="description">是否允许发送到Mojang服务器的匿名统计数据</p>
+	                                <p class="description">是否允许发送到Mojang服务器的匿名统计数据。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_snooper">
@@ -861,7 +861,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">包括权限设置</p>
-                                <p class="description">在定时备份中包括用户和用户组页面中的设定。</p>
+                                <p class="description">定时备份用户和用户组页面中的设定。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_schedperm">
@@ -874,7 +874,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">包括插件</p>
-                                <p class="description">在定时备份中包括所有jar格式的插件。</p>
+                                <p class="description">定时备份所有jar格式的插件。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_schedplugs">
@@ -887,7 +887,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">包括插件配置</p>
-                                <p class="description">在定时备份中包括所有yml、txt等格式的插件配置文件。</p>
+                                <p class="description">备份所有yml、txt等格式的插件配置文件。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_schedconf">
@@ -901,7 +901,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">服务端故障时自动重启</p>
-                                <p class="description">启用之后，当出现'SEVERE'(严重)错误时，McMyAdmin将自动重启Minecraft服务端。如果你装有故障/错误的插件，可能需要禁用此设置。</p>
+                                <p class="description">启用之后，当出现'SEVERE'(严重)错误时，McMyAdmin将自动重启MineCraft服务端。如果你安装有故障/错误的插件，可能需要禁用此设置。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_severerestart">
@@ -979,7 +979,7 @@
                         </div>
                     </div>
                     <div class="subtabcontainer" id="tab_config_panelsettings">
-	                        <p class="notopmargin">注意：这些设置仅在本地以cookies形式保存。</p>
+	                        <p class="notopmargin">注意：这些设置仅在本地以Cookies形式保存。</p>
 	                        <h4>界面颜色</h4>
                         <div class="s384">
                             <div class="colorsample" style="background-color:#002D5B;"></div>
@@ -1025,7 +1025,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">关闭界面动画</p>
-	                                <p class="description">关闭动画可以提高运行速度</p>
+	                                <p class="description">关闭动画以提高程序运行速度。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_local_notransitions">
@@ -1036,8 +1036,8 @@
 	                        </div>
 	                        <div class="settingrow">
 	                            <div class="setting">
-	                                <p class="title">在控制台显示时间</p>
-	                                <p class="description">受是否显示指令/聊天所发出时间，小屏幕用户可以选择关闭。</p>
+	                                <p class="title">在控制台内显示时间</p>
+	                                <p class="description">是否显示指令/信息发出时间，小屏幕用户可以选择关闭。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_local_showtimestamps">
@@ -1049,7 +1049,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">控制台只显示聊天记录</p>
-	                                <p class="description">选择控制台是否只显示聊天记录而不显示完全版信息</p>
+	                                <p class="description">选择控制台是否只显示聊天记录而不显示完全版信息。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_local_chatonly">
@@ -1060,11 +1060,11 @@
                         </div>
                     </div>
                     <div class="subtabcontainer auth_16" id="tab_config_features">
-                        <p class="notopmargin">对你的Minecraft进行个性化定制。</p>
+                        <p class="notopmargin">对你的MineCraft进行个性化定制。</p>
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">服务器名称</p>
-	                                <p class="description">在服务器列表中显示的服务器名称</p>
+	                                <p class="description">在服务器列表中显示的服务器名称。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <input type="text" id="setting_servername"/>
@@ -1073,8 +1073,8 @@
                             
 	                        <div class="settingrow">
 	                            <div class="setting">
-	                                <p class="title">欢迎辞</p>
-	                                <p class="description">当玩家加入游戏时向他发送的信息</p>
+	                                <p class="title">欢迎语</p>
+	                                <p class="description">当有玩家加入游戏时向玩家发送的信息。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <textarea id="setting_motd" rows="4" cols="30"></textarea>
@@ -1084,7 +1084,7 @@
 	                        <div class="settingrow">
 	                            <div class="setting">
 	                                <p class="title">白名单</p>
-	                                <p class="description">选择使用哪一种白名单方式</p>
+	                                <p class="description">选择使用哪一种白名单方式。</p>
 	                            </div>
 	                            <div class="setting">
 	                                <select id="setting_whitelistMode">
@@ -1099,7 +1099,7 @@
                         <div class="settingrow">
                             <div class="setting">
                                 <p class="title">用户组白名单</p>
-	                                <p class="description">用于选择哪个群组获得白名单权限。</p>
+	                                <p class="description">选择哪个群组可以获得白名单权限。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_whitelistGroup"></select>
@@ -1122,7 +1122,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">服务器唤醒</p>
-	                                <p class="description">向试图连接服务器的玩家告知服务器正在启动的信息:</p>
+	                                <p class="description">向试图连接服务器的玩家告知服务器正在启动的信息。</p>
                             </div>
                             <div class="setting">
                                 <input type="text" id="setting_sleepmsg" />
@@ -1175,13 +1175,13 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">备份超出限制</p>
-	                                <p class="description">当备份因超过数量/大小限制时</p>
+	                                <p class="description">当备份因超过数量/大小限制时。</p>
                             </div>
                             <div class="setting">
                                 <select id="settng_backupoverflow">
 	                                    <option value="NoDelete">取消备份</option>
 	                                    <option value="DeleteOldest">删除此时最早的备份(默认)</option>
-	                                    <option value="KeepDeleting">删除此时最早的备份直到可以备份</option>
+	                                    <option value="KeepDeleting">删除此时最早的备份直到可以备份。</option>
                                 </select>
                             </div>
                         </div>
@@ -1189,7 +1189,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">mChat 信息格式</p>
-	                                <p class="description">如果试用了mChat，在这里设置信息格式</p>
+	                                <p class="description">如果试用了mChat，在这里设置信息格式。</p>
                             </div>
                             <div class="setting">
                                 <input id="setting_mchatformat" type="text" />
@@ -1201,7 +1201,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">白名单信息</p>
-	                                <p class="description">当玩家不在白名单是，踢出玩家时显示的信息。（仅支持bukkit）</p>
+	                                <p class="description">当玩家不在白名单时，踢出玩家时显示的信息。（仅支持Bukkit）</p>
                             </div>
                             <div class="setting">
                                 <input id="setting_whitelistmessage" type="text" />
@@ -1211,7 +1211,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">欢迎信息</p>
-	                                <p class="description">是否在玩家进入服务器时显示欢迎玩家的信息</p>
+	                                <p class="description">是否在玩家进入服务器时显示欢迎玩家的信息。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_showwelcome">
@@ -1224,7 +1224,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">显示McMyAdmin登陆错误信息</p>
-                                <p class="description">当没有McMyAdmin账户的用户试图执行一条McMyAdmin指令时，是否向他显示错误信息</p>
+                                <p class="description">当没有McMyAdmin账户的用户试图执行一条McMyAdmin指令时，是否向他显示错误信息。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_showaccessdenied">
@@ -1237,7 +1237,7 @@
                         <div class="settingrow">
                             <div class="setting">
 	                                <p class="title">自动保存信息</p>
-	                                <p class="description">是否告知玩家服务器在自动保存中</p>
+	                                <p class="description">是否通知玩家服务器正在自动保存。</p>
                             </div>
                             <div class="setting">
                                 <select id="setting_warnsave">
@@ -1306,7 +1306,7 @@
                                         <li><input type="checkbox" value="1024" id="up_1024" class="userFlag" /><label for="up_1024">恢复备份</label></li>
                                         <li><input type="checkbox" value="2048" id="up_2048" class="userFlag" /><label for="up_2048">删除世界</label></li>
                                         <li><input type="checkbox" value="4096" id="up_4096" class="userFlag" /><label for="up_4096">修改计划</label></li>
-                                        <li><input type="checkbox" value="8192" id="up_8192" class="userFlag" /><label for="up_8192">升级Minecraft服务器</label></li>
+                                        <li><input type="checkbox" value="8192" id="up_8192" class="userFlag" /><label for="up_8192">升级MineCraft服务器</label></li>
                                         <li><input type="checkbox" value="16384" id="up_16384" class="userFlag" /><label for="up_16384">升级McMyAdmin服务器</label></li>
                                         <li class="notimplemented"><input type="checkbox" value="32768" id="up_32768" class="userFlag" /><label for="up_32768">进行故障排除</label></li>
                                     <li><input type="checkbox" value="65536" id="up_65536" class="userFlag" /><label for="up_65536">使用文件管理器</label></li>
@@ -1342,9 +1342,9 @@
                                 <h4>关于 McMyAdmin 2</h4>
 	                            <p class="notopmargin">McMyAdmin <span class="reg_versioninfo"></span> 版本</p>
 	                            <p>授权注册人: <span class="reg_owner">（拥有者）</span></p>
-	                            <p>CubeCoders制作的McMyAdmin自带方便使用的网页控制台，使您更方便的管理您的Minecraft服务器。</p>
-	                            <p>它可以让您对服务器有着完全的控制权并且在故障时更方便的诊断错误。</p>
-	                            <p>McMyAdmin ©2010-2013，制作团队 CubeCoders 有限公司 - 保留一切权利。更多信息请参见LICENCE.txt。</p>
+	                            <p>CubeCoders制作的McMyAdmin自带方便使用的网页控制台，使您更方便的管理您的MineCraft服务器。</p>
+	                            <p>它可以让您对服务器有着完全的控制权并且在故障时更方便的诊断错误</p>
+	                            <p>McMyAdmin ©2010-2013，制作团队 CubeCoders 有限公司 - 保留一切权利。更多信息请参见LICENCE.txt</p>
                             </div>
 
                         <div class="subarea">
@@ -1407,7 +1407,7 @@
                                 <p class="nomargin">远程协助可以使一名用户帮助另一名用户如何使用McMyAdmin</p>
                                 <p>远程协助发起者可以操作界面，加入者可以看到发起者的操作以及指针的移动。</p>
                                 <p>加入者在远程协助期间不可以操作McMyAdmin直到结束。</p>
-                                <p>请注意现在远程协助只能由admin用户发起。</p>
+                                <p>请注意现在远程协助只能由Admin用户发起。</p>
                             </div>
                             <div class="subarea">
 	                            <h4>开始远程协助</h4>
@@ -1421,7 +1421,7 @@
 	                        <table id="diagsummary">
 	                            <tr>
 	                                <td>很紧急</td>
-	                                <td>这些问题会导致服务器崩溃</td>
+	                                <td>这些问题会导致服务器崩溃。</td>
 	                            </tr>
 	                            <tr>
 	                                <td>紧急</td>
